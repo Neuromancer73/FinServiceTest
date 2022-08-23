@@ -1,7 +1,7 @@
-package com.finservicetest.domain.usecases
+package com.finservicetest.domain.usecase
 
 import com.finservicetest.domain.model.AccountDetails
 
 interface GetAccountBalanceUseCase {
-    suspend operator fun invoke(accountNumber: String?): AccountDetails
+    suspend operator fun invoke(accountNumber: Long): Result<AccountDetails>
 }

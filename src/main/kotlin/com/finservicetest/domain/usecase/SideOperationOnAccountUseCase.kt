@@ -1,8 +1,7 @@
-package com.finservicetest.domain.usecases
+package com.finservicetest.domain.usecase
 
-import com.finservicetest.domain.model.AccountDetails
 import com.finservicetest.domain.model.AccountOperation
 
 interface SideOperationOnAccountUseCase {
-    suspend operator fun invoke(accountOperation: AccountOperation): AccountDetails
+    suspend operator fun invoke(accountOperation: AccountOperation): Result<Unit>
 }

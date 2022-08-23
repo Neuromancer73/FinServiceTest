@@ -1,5 +1,5 @@
-package com.finservicetest.domain.usecases
+package com.finservicetest.domain.usecase
 
 interface CheckAccountStatusUseCase {
-    suspend operator fun invoke(accountNumber: String?): String
+    suspend operator fun invoke(accountNumber: Long): Result<String>
 }

@@ -1,27 +1,14 @@
 package com.finservicetest.domain.service
 
-import com.finservicetest.data.AccountRepository
-import com.finservicetest.domain.model.AccountDetails
-import com.finservicetest.domain.usecase.GetAccountBalanceUseCase
-import com.finservicetest.domain.util.toAccountDetails
-import org.springframework.stereotype.Component
+import com.finservicetest.domain.data.AccountRepository
+import com.finservicetest.domain.usecase.CheckAccountStatusUseCase
+import org.springframework.stereotype.Service
 
-@Component
-class GetAccountStatus(val accountRepository: AccountRepository) : GetAccountBalanceUseCase {
+@Service
+class CheckAccountStatus(val accountRepository: AccountRepository) : CheckAccountStatusUseCase {
 
-    override suspend fun invoke(accountNumber: String?): Result<AccountDetails> {
-        if (accountNumber.isNullOrEmpty()) {
-            return Result.failure(IllegalArgumentException())
-        }
-        val parsedAccountNumber =
-            try {
-                accountNumber.toLong()
-            } catch (exception: NumberFormatException) {
-                return Result.failure(IllegalArgumentException())
-            }
-        accountRepository.findById(parsedAccountNumber)?.let {
-                return Result.success(it.toAccountDetails())
-            }
-        return Result.failure(NoSuchElementException())
-    }
+    override suspend fun invoke(accountNumber: Long) =
+        accountRepository.getAccountDetails(accountNumber)
+            ?.let { Result.success(it.status.toString()) }
+            ?: Result.failure(NoSuchElementException())
 }

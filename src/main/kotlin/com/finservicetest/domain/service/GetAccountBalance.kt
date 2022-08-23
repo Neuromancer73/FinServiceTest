@@ -1,10 +1,14 @@
 package com.finservicetest.domain.service
 
-import com.finservicetest.domain.model.AccountDetails
+import com.finservicetest.domain.data.AccountRepository
 import com.finservicetest.domain.usecase.GetAccountBalanceUseCase
+import org.springframework.stereotype.Service
 
-class GetAccountBalanceService : GetAccountBalanceUseCase {
-    override suspend fun invoke(accountNumber: String?): AccountDetails {
-        TODO("Not yet implemented")
-    }
+@Service
+class GetAccountBalance(val accountRepository: AccountRepository) : GetAccountBalanceUseCase {
+
+    override suspend fun invoke(accountNumber: Long) =
+        accountRepository.getAccountDetails(accountNumber)
+            ?.let { Result.success(it) }
+            ?: Result.failure(NoSuchElementException())
 }

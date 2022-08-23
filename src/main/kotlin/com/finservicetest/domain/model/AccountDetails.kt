@@ -1,5 +1,14 @@
 package com.finservicetest.domain.model
 
-class Account (val accountNumber: String,
-               Amount
-               Currency)
+import java.math.BigDecimal
+
+data class AccountDetails(
+    val accountNumber: Long,
+    val currency: Int,
+    val balance: BigDecimal,
+    val status: AccountStatus
+)
+
+enum class AccountStatus {
+    OPEN, CLOSED
+}
